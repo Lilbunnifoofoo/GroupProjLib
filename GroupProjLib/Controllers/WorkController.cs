@@ -11,10 +11,19 @@ namespace GroupProjLib.Controllers {
 
         private GpDbContext _context = new GpDbContext();
 
+        public void ProjectAssignBasedOnWork(Work work) {
+            var resource = _context.Resources.Find(work.ResourcesId);
+            if (resource == null) {
+                throw new Exception("There is no value for this resourceId.");
+            }
+            resource.ProjectId = work.ProjectId;
+            _context.SaveChanges();
+        }
+
         public void RecalculateActualHours(int projId) {
             var project = _context.Projects.Find(projId);
             if (project == null) {
-                throw new Exception("There is no value for this projectId");
+                throw new Exception("There is no value for this projectId.");
             }
             project.actualHours = (from w in _context.Works
                                    where w.ProjectId == projId
@@ -40,6 +49,7 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Update Failed!");
             RecalculateActualHours(work.ProjectId);
+            ProjectAssignBasedOnWork(work);
         }
 
 
@@ -50,6 +60,7 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Add Work failed!");
             RecalculateActualHours(work.ProjectId);
+            ProjectAssignBasedOnWork(work);
         }
 
 
@@ -63,6 +74,7 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Remove failed!");
             RecalculateActualHours(work.ProjectId);
+            ProjectAssignBasedOnWork(work);
         }
 
     }
