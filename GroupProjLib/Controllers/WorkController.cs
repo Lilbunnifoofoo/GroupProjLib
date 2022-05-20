@@ -11,6 +11,17 @@ namespace GroupProjLib.Controllers {
 
         private GpDbContext _context = new GpDbContext();
 
+        public void RecalculateActualHours(int projId) {
+            var project = _context.Projects.Find(projId);
+            if (project == null) {
+                throw new Exception("There is no value for this projectId");
+            }
+            project.actualHours = (from w in _context.Works
+                                   where w.ProjectId == projId
+                                   select new { TotalHours = w.Hours }).Sum(x => x.TotalHours);
+            _context.SaveChanges();
+        }
+
         //Read Works
         public List<Work> GetWorks() {
             return _context.Works.ToList();
@@ -28,6 +39,7 @@ namespace GroupProjLib.Controllers {
             var rowsAffected = _context.SaveChanges();
             if (rowsAffected != 1)
                 throw new Exception("Update Failed!");
+            RecalculateActualHours(work.ProjectId);
         }
 
 
@@ -37,6 +49,7 @@ namespace GroupProjLib.Controllers {
             var rowsAffected = _context.SaveChanges();
             if (rowsAffected != 1)
                 throw new Exception("Add Work failed!");
+            RecalculateActualHours(work.ProjectId);
         }
 
 
@@ -49,6 +62,7 @@ namespace GroupProjLib.Controllers {
             var rowsAffected = _context.SaveChanges();
             if (rowsAffected != 1)
                 throw new Exception("Remove failed!");
+            RecalculateActualHours(work.ProjectId);
         }
 
     }
