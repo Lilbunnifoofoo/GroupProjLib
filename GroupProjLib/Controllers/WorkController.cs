@@ -49,7 +49,8 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Update Failed!");
             RecalculateActualHours(work.ProjectId);
-            ProjectAssignBasedOnWork(work);
+            if (work.ResourcesId != null)
+                ProjectAssignBasedOnWork(work);
         }
 
 
@@ -60,7 +61,8 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Add Work failed!");
             RecalculateActualHours(work.ProjectId);
-            ProjectAssignBasedOnWork(work);
+            if (work.ResourcesId != null)
+                ProjectAssignBasedOnWork(work);
         }
 
 
@@ -74,7 +76,8 @@ namespace GroupProjLib.Controllers {
             if (rowsAffected != 1)
                 throw new Exception("Remove failed!");
             RecalculateActualHours(work.ProjectId);
-            ProjectAssignBasedOnWork(work);
+            if (work.ResourcesId != null)
+                ProjectAssignBasedOnWork(work);
         }
 
     }
