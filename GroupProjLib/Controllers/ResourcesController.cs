@@ -19,15 +19,14 @@ namespace GroupProjLib.Controllers
         {
             return _context.Resources.Find(id)!;
         }
-        public Resources AddResources(Resources Name)
+        public void AddResources(Resources Name)
         {
             _context.Resources.Add(Name);
             var rowsAffected = _context.SaveChanges();
-            if(rowsAffected != 1)
+            if (rowsAffected != 1)
             {
                 throw new Exception("Add resource failed!");
-            }
-            return Name;
+            }             
         }
         public void UpdateResource(Resources name)
         {
