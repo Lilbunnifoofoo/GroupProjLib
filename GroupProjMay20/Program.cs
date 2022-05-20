@@ -54,3 +54,40 @@ pc.AddProject(proj5);
 pc.AddProject(proj6);
 
 #endregion
+
+
+#region ResourceData
+var res1 = new Resources();
+var res2 = new Resources();
+var res3 = new Resources();
+var res4 = new Resources();
+var res5 = new Resources();
+var res6 = new Resources();
+
+
+res1.Name = "Dorothy";
+res1.HoursPerDay = 12;
+
+res2.Name = "Sophia";
+res2.HoursPerDay = 10;
+
+res3.Name = "Blanche";
+res3.HoursPerDay = 5;
+
+res4.Name = "Rose";
+res4.HoursPerDay = 10;
+
+res5.Name = "Groucho";
+res5.HoursPerDay = 8;
+
+res6.Name = "Harpo";
+res6.HoursPerDay = 4;
+
+rc.AddResources(res1);
+rc.AddResources(res2);
+rc.AddResources(res3);
+rc.AddResources(res4);
+rc.AddResources(res5);
+rc.AddResources(res6);
+
+#endregion
